@@ -1,0 +1,36 @@
+/*
+Copyright 2020 Erwan Mahe (github.com/erwanM974)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+
+
+
+
+TRACE_EMISSION_SYMBOL = { "!" }
+TRACE_RECEPTION_SYMBOL = { "?" }
+
+TRACE_ACTION = { HIBOU_LABEL ~ (TRACE_EMISSION_SYMBOL|TRACE_RECEPTION_SYMBOL) ~ HIBOU_LABEL }
+TRACE_SEQUENCE = { (TRACE_ACTION ~ ("." ~ TRACE_ACTION)*)? }
+// ***********************************************
+CANAL_LIFELINES_any = {"#any"}
+CANAL_LIFELINES_all = {"#all"}
+CANAL_LIFELINES = _{ "[" ~ (CANAL_LIFELINES_any | CANAL_LIFELINES_all | HIBOU_LABEL_LIST_no_sep) ~ "]" }
+CANAL_TRACE = { CANAL_LIFELINES ~ TRACE_SEQUENCE }
+// ***********************************************
+
+MULTI_TRACE = { "{" ~ (CANAL_TRACE ~ (";" ~ CANAL_TRACE)* )? ~ (";")? ~ "}" }
+
+HTF_PEST_FILE = { SOI ~ (MULTI_TRACE|TRACE_SEQUENCE) ~ EOI }
+

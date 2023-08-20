@@ -1,0 +1,75 @@
+/*
+Copyright 2020 Erwan Mahe (github.com/erwanM974)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+
+ENVIRONMENT_TARGET = { "|" }
+
+
+SD_COMMUNICATION_ORIGIN = { HIBOU_LABEL ~ "--" }
+
+SD_COMMUNICATION_TARGET = { "->" ~ (HIBOU_LABEL | HIBOU_LABEL_LIST_paren | ENVIRONMENT_TARGET) }
+
+SD_COMMUNICATION_ACTION = { SD_COMMUNICATION_ORIGIN? ~ HIBOU_LABEL ~ SD_COMMUNICATION_TARGET }
+
+
+SD_EMPTY_INTERACTION = {"o" | "∅"}
+
+
+SD_SEQ = {"seq"}
+SD_SEQ_INT = { SD_SEQ ~ "(" ~ SD_INTERACTION ~ ( "," ~ SD_INTERACTION)+ ~ ")" }
+
+SD_COREG = {"coreg"}
+SD_COREG_INT = { SD_COREG ~ HIBOU_LABEL_LIST_paren ~ "(" ~ SD_INTERACTION ~ ( "," ~ SD_INTERACTION)+ ~ ")" }
+
+// ***
+
+TRACE_ACTION_SET = { "{" ~ TRACE_ACTION ~ ("," ~ TRACE_ACTION)+ ~ "}" }
+SD_SYNC_ACTIONS = _{ "(" ~ TRACE_ACTION ~ ")" | TRACE_ACTION_SET }
+
+SD_SYNC = {"sync"}
+SD_SYNC_INT = { SD_SYNC ~ SD_SYNC_ACTIONS ~ "(" ~ SD_INTERACTION ~ ( "," ~ SD_INTERACTION)+ ~ ")" }
+// ***
+
+
+
+SD_ALT = {"alt"}
+SD_ALT_INT = { SD_ALT ~ "(" ~ SD_INTERACTION ~ ( "," ~ SD_INTERACTION)+ ~ ")" }
+
+SD_PAR = {"par"}
+SD_PAR_INT = { SD_PAR ~ "(" ~ SD_INTERACTION ~ ( "," ~ SD_INTERACTION)+ ~ ")" }
+
+
+
+SD_LOOP_KIND_W = { "W" }
+SD_LOOP_KIND_P = { "P" }
+SD_LOOP_KIND_C = { "C" ~ HIBOU_LABEL_LIST_paren }
+
+SD_LOOP = {"loop" ~ (SD_LOOP_KIND_W | SD_LOOP_KIND_P | SD_LOOP_KIND_C)}
+SD_LOOP_INT = { SD_LOOP ~ "(" ~ SD_INTERACTION ~ ")" }
+
+
+SD_INTERACTION = { SD_EMPTY_INTERACTION
+		| SD_COMMUNICATION_ACTION
+        | SD_SEQ_INT
+        | SD_COREG_INT
+        | SD_ALT_INT
+        | SD_PAR_INT
+        | SD_LOOP_INT
+        | SD_SYNC_INT
+        }
+
+
+HIF_PEST_FILE = _{ SOI ~ SD_INTERACTION ~ EOI }

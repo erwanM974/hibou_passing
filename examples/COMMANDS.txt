@@ -1,0 +1,4 @@
+
+ .\hibou_passing.exe explore .\ex.hsf .\test0.hif .\conf.hcf
+
+ .\hibou_passing.exe analyze .\ex.hsf .\test1.hif .\test1.htf .\conf.hcf

@@ -1,0 +1,12 @@
+loopW(
+	sync(l2!A)(
+		alt(
+			l2 -- B -> l3,
+			o
+		),
+		alt(
+			l2 -- C -> l1,
+			o
+		)
+	)
+)

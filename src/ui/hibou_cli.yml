@@ -1,0 +1,248 @@
+#
+# Copyright 2020 Erwan Mahe (github.com/erwanM974)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+
+name: hibou_passing
+version: "0.1.0"
+author: Erwan Mahe <github.com/erwanM974>
+about: Holistic Interaction Behavioral Oracle Utility - fork of HIBOU focused on typed message passing
+subcommands:
+    - draw:
+        about: utility to draw an interaction either as a sequence diagram or a term tree
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - hif:
+              required: true
+              index: 2
+              help: input hibou interaction file
+          - output:
+              required: false
+              short: o
+              takes_value: true
+              help: target file for drawing (default is 'the name of the hsf'.png)
+          - representation:
+              required: false
+              short: r
+              takes_value : true
+              help: kind of representation (either sequence diagram 'sd' or term tree 'tt')
+    - explore:
+        about: utility to explore the semantics of an interaction
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - hif:
+              required: true
+              index: 2
+              help: input hibou interaction file
+          - hcf:
+              required: false
+              index: 3
+              help: input hibou configuration file
+    - analyze:
+        about: utility to analyze a (multi-)trace w.r.t. an interaction
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - hif:
+              required: true
+              index: 2
+              help: input hibou interaction file
+          - htf:
+              required: true
+              index: 3
+              help: input hibou trace file
+          - hcf:
+              required: false
+              index: 4
+              help: input hibou configuration file
+    - slice:
+        about: utility to generate slices of a (multi-)trace
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - htf:
+              required: true
+              index: 2
+              help: input hibou trace file
+          - parent_folder:
+              required: false
+              short: p
+              takes_value: true
+              help: parent folder in which to generate slices
+          - kind:
+              required: false
+              short: k
+              takes_value: true
+              help: either prefix, suffix or slice (default)
+          - random:
+              required: false
+              short: r
+              takes_value: true
+              help: random selection of a number of slices instead of exhaustive generation
+          - wide:
+              required: false
+              short: w
+              takes_value: false
+              help: keep only wider slices (each component length at least one third of the original)
+          - name:
+              required: false
+              short: n
+              takes_value: true
+              help: a name for prefixing generated files names
+    - mutate_remove_actions:
+        about: utility to generate generate a mutant from a multi-trace by inserting noise actions
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - htf:
+              required: true
+              index: 2
+              help: input hibou trace file
+          - name:
+              required: false
+              short: n
+              takes_value: true
+              help: name of the mutant
+          - parent_folder:
+              required: false
+              short: p
+              takes_value: true
+              help: parent folder in which to generate mutant
+          - max_num_removes:
+              required: false
+              short: m
+              takes_value: true
+              help: maximum number of inserts (default 1), actual number can be lower due other parameters
+    - mutate_insert_noise:
+        about: utility to generate generate a mutant from a multi-trace by inserting noise actions
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - htf:
+              required: true
+              index: 2
+              help: input hibou trace file
+          - name:
+              required: false
+              short: n
+              takes_value: true
+              help: name of the mutant
+          - parent_folder:
+              required: false
+              short: p
+              takes_value: true
+              help: parent folder in which to generate mutant
+          - one_per_compo_max:
+              required: false
+              short: u
+              takes_value: false
+              help: if true can only insert one noisy action per trace component
+          - only_at_end:
+              required: false
+              short: e
+              takes_value: false
+              help: if true can only insert noisy actions at the end of trace components
+          - max_num_inserts:
+              required: false
+              short: m
+              takes_value: true
+              help: maximum number of inserts (default 1), actual number can be lower due other parameters
+    - mutate_swap_actions:
+        about: utility to generate generate a mutant from a multi-trace by swaping positions of actions within its component traces
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - htf:
+              required: true
+              index: 2
+              help: input hibou trace file
+          - name:
+              required: false
+              short: n
+              takes_value: true
+              help: name of the mutant
+          - parent_folder:
+              required: false
+              short: p
+              takes_value: true
+              help: parent folder in which to generate mutant
+          - max_num_swap:
+              required: false
+              short: m
+              takes_value: true
+              help: maximum number of swaps (default 1), actual number can be lower due to multi-trace size
+    - mutate_swap_components:
+        about: utility to generate generate a mutant from two multi-traces by swaping their respective component traces
+        version: "0.1.0"
+        author: Erwan Mahe <github.com/erwanM974>
+        args:
+          - hsf:
+              required: true
+              index: 1
+              help: input hibou signature file
+          - htf1:
+              required: true
+              index: 2
+              help: input hibou trace file
+          - htf2:
+              required: true
+              index: 3
+              help: input hibou trace file
+          - name:
+              required: false
+              short: n
+              takes_value: true
+              help: name of the mutant
+          - parent_folder:
+              required: false
+              short: p
+              takes_value: true
+              help: parent folder in which to generate mutant
+          - max_num_swap:
+              required: false
+              short: m
+              takes_value: true
+              help: maximum number of swaps (default 1), actual number can be lower due to multi-trace size
+

@@ -1,0 +1,22 @@
+@explore_option{
+    	loggers = [	
+			graphic[svg,
+				vertical,
+				draw_legend=true,
+				draw_sd=true,
+				draw_tt=false]
+	];
+    	strategy = BFS;
+	memoize = true;
+	execution = symbolic;
+        filters = [max_loop_depth = 2]
+}
+@analyze_option{
+    	loggers = [	
+			graphic[svg,
+				vertical,
+				draw_legend=true,
+				draw_sd=true,
+				draw_tt=false]
+	]
+}

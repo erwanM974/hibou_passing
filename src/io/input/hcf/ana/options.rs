@@ -278,9 +278,7 @@ fn parse_priorities(priorities_decl_pair : Pair<Rule>) -> Result<GenericProcessP
     let mut randomize : bool = false;
     let mut emission : i32 = 0;
     let mut reception : i32 = 0;
-    let mut multi_rdv : i32 = 0;
     let mut in_loop : i32 = 0;
-    let mut elim : i32 = 0;
     let mut simu : i32 = 0;
     // ***
     for priority_pair in priorities_decl_pair.into_inner() {
@@ -333,7 +331,7 @@ fn parse_priorities(priorities_decl_pair : Pair<Rule>) -> Result<GenericProcessP
         }
     }
     // ***
-    let specific = AnalysisPriorities::new(emission,reception,multi_rdv,in_loop,elim,simu);
+    let specific = AnalysisPriorities::new(emission,reception,in_loop,simu);
     return Ok(GenericProcessPriorities::new(specific,randomize));
 }
 

@@ -26,9 +26,7 @@ use crate::process::ana::step::AnalysisStepKind;
 pub struct AnalysisPriorities {
     pub emission : i32,
     pub reception : i32,
-    pub multi_rdv : i32,
     pub in_loop : i32,
-    pub elim : i32,
     pub simu : i32
 }
 
@@ -36,27 +34,23 @@ impl AnalysisPriorities {
 
     pub fn new(emission : i32,
                reception : i32,
-               multi_rdv : i32,
                in_loop : i32,
-               elim : i32,
                simu : i32) -> AnalysisPriorities {
-        return AnalysisPriorities{emission,reception,multi_rdv,in_loop,elim,simu};
+        return AnalysisPriorities{emission,reception,in_loop,simu};
     }
 
     pub fn default() -> AnalysisPriorities {
-        return AnalysisPriorities::new(0,0,0,0,1,-1);
+        return AnalysisPriorities::new(0,0,0,-1);
     }
 }
 
 impl fmt::Display for AnalysisPriorities {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f,
-               "[emission={:},reception={:},multi-rdv={:},loop={:},elim={:},simu={:}]",
+               "[emission={:},reception={:},loop={:},simu={:}]",
             self.emission,
             self.reception,
-            self.multi_rdv,
             self.in_loop,
-            self.elim,
             self.simu)
     }
 }
